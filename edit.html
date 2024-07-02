@@ -12,6 +12,8 @@
         .content { display: none; }
         .content.active { display: block; }
         .edit-buttons { margin-top: 20px; }
+        .product-item { margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+        .product-item img { max-width: 100px; max-height: 100px; margin-right: 10px; vertical-align: middle; }
     </style>
     <script src="authentication.js"></script>
 </head>
@@ -37,6 +39,21 @@
         </div>
     </div>
 
+    <!-- Modal for adding product with image -->
+    <div id="addProductModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Agregar Producto</h2>
+            <label for="productName">Nombre del Producto:</label>
+            <input type="text" id="productName">
+            <label for="productImage">Imagen del Producto:</label>
+            <input type="file" id="productImage" accept="image/*">
+            <label for="productPrice">Precio del Producto:</label>
+            <input type="number" id="productPrice">
+            <button onclick="saveProduct()">Guardar Producto</button>
+        </div>
+    </div>
+
     <script>
         function showPage(pageId) {
             var pages = document.querySelectorAll('.content');
@@ -47,13 +64,48 @@
         }
 
         function addProduct() {
-            var productName = prompt("Ingrese el nombre del producto:");
-            if (productName) {
-                var productList = document.getElementById('productos-list');
-                var newProduct = document.createElement('p');
-                newProduct.textContent = productName;
-                productList.appendChild(newProduct);
+            var modal = document.getElementById('addProductModal');
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            var modal = document.getElementById('addProductModal');
+            modal.style.display = 'none';
+            // Clear input fields after closing modal
+            document.getElementById('productName').value = '';
+            document.getElementById('productImage').value = '';
+            document.getElementById('productPrice').value = '';
+        }
+
+        function saveProduct() {
+            var productName = document.getElementById('productName').value;
+            var productImage = document.getElementById('productImage').files[0];
+            var productPrice = document.getElementById('productPrice').value;
+
+            // Create product element
+            var productList = document.getElementById('productos-list');
+            var newProduct = document.createElement('div');
+            newProduct.classList.add('product-item');
+
+            // Add image if selected
+            if (productImage) {
+                var img = document.createElement('img');
+                img.src = URL.createObjectURL(productImage);
+                newProduct.appendChild(img);
             }
+
+            // Add name and price
+            var productInfo = document.createElement('div');
+            productInfo.innerHTML = '<strong>' + productName + '</strong>';
+            if (productPrice) {
+                productInfo.innerHTML += ' - Precio: ' + productPrice + ' pesos';
+            }
+            newProduct.appendChild(productInfo);
+
+            productList.appendChild(newProduct);
+
+            // Close modal after adding product
+            closeModal();
         }
     </script>
 </body>
