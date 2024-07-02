@@ -131,3 +131,182 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matisa Jardín</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Light gray background */
+            color: #333; /* Dark gray text color */
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff; /* White container background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50; /* Green title color */
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        nav {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        nav button {
+            margin-right: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #4CAF50; /* Green button */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        .content {
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .contact-info p {
+            font-size: 1.2em;
+        }
+
+        #productos-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .product-item {
+            width: 300px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-item img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Matisa Jardín</h1>
+        <nav>
+            <button onclick="showPage('productos')">Productos</button>
+            <button onclick="showPage('contacto')">Contacto</button>
+        </nav>
+        <div id="productos" class="content active">
+            <h2>Productos Disponibles</h2>
+            <div id="productos-list">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+        <div id="contacto" class="content">
+            <div class="contact-info">
+                <h3>Para comprar comuníquese por contacto</h3>
+                <p>Teléfono: +56978566562</p>
+                <p>Dirección: Peñaflor, pasaje Parroco Agustín Lobos 2461</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to retrieve products from localStorage
+        function getProductsFromStorage() {
+            var products = JSON.parse(localStorage.getItem('products')) || [];
+            return products;
+        }
+
+        // Function to display products on the page
+        function displayProducts() {
+            var productList = document.getElementById('productos-list');
+            productList.innerHTML = ''; // Clear previous products
+
+            var products = getProductsFromStorage();
+
+            products.forEach(function(product) {
+                var productElement = document.createElement('div');
+                productElement.classList.add('product-item');
+
+                // Create image element
+                if (product.image) {
+                    var img = document.createElement('img');
+                    img.src = product.image;
+                    productElement.appendChild(img);
+                }
+
+                // Create name and price elements
+                var productInfo = document.createElement('div');
+                productInfo.innerHTML = '<strong>' + product.name + '</strong>';
+                if (product.price) {
+                    productInfo.innerHTML += ' - Precio: ' + product.price + ' pesos';
+                }
+                productElement.appendChild(productInfo);
+
+                productList.appendChild(productElement);
+            });
+        }
+
+        // Function to show selected page and hide others
+        function showPage(pageId) {
+            var pages = document.querySelectorAll('.content');
+            pages.forEach(function(page) {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+
+            if (pageId === 'productos') {
+                displayProducts(); // Display products when productos page is shown
+            }
+        }
+
+        // Show default page on initial load
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('productos'); // Show productos page by default
+        });
+    </script>
+</body>
+</html>
