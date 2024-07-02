@@ -10,7 +10,7 @@
             background-color: #f0f0f0; /* Light gray background */
             color: #333; /* Dark gray text color */
             margin: 0;
-            padding: 0;
+            padding: 20px;
         }
 
         .container {
@@ -31,161 +31,63 @@
             color: #333;
         }
 
-        nav {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        nav button {
-            margin-right: 10px;
-            padding: 10px 20px;
-            cursor: pointer;
-            background-color: #4CAF50; /* Green button */
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        nav button:hover {
-            background-color: #45a049; /* Darker green on hover */
-        }
-
-        .category-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .category-button {
-            flex: 1;
-            margin: 0 10px;
+        .category {
+            width: 48%;
+            margin: 1%;
+            display: inline-block;
+            vertical-align: top;
+            background-color: #fff; /* White background for categories */
             padding: 20px;
-            text-align: center;
-            background-color: #4CAF50; /* Green button */
-            color: #fff;
-            border: none;
             border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            cursor: pointer;
-            transition: transform 0.3s ease;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
         }
 
-        .category-button:hover {
-            transform: translateY(-5px);
-        }
-
-        #productos-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
+        .contact-info {
             margin-top: 20px;
-        }
-
-        .product-item {
-            width: 300px;
-            padding: 10px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .product-item img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin-bottom: 10px;
+            padding: 20px;
+            background-color: #fff; /* White background for contact info */
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Matisa Jardín</h1>
-        <nav>
-            <button onclick="showPage('productos')">Productos</button>
-            <button onclick="showPage('contacto')">Contacto</button>
-        </nav>
-        <div class="category-buttons">
-            <div class="category-button" onclick="showCategory('flores')">
-                <h2>Flores</h2>
-                <img src="images/flowers.jpg" alt="Flores">
-            </div>
-            <div class="category-button" onclick="showCategory('árboles')">
-                <h2>Árboles</h2>
-                <img src="images/trees.jpg" alt="Árboles">
-            </div>
-            <div class="category-button" onclick="showCategory('herramientas')">
-                <h2>Herramientas de Jardín</h2>
-                <img src="images/tools.jpg" alt="Herramientas de Jardín">
-            </div>
-            <div class="category-button" onclick="showCategory('macetas')">
-                <h2>Macetas</h2>
-                <img src="images/pots.jpg" alt="Macetas">
-            </div>
+
+        <h2>Productos</h2>
+
+        <div class="category">
+            <h3>Categoría 1</h3>
+            <!-- Replace with dynamic content or links to category pages -->
+            <p>Contenido de la categoría 1</p>
         </div>
-        <div id="productos-list" class="content">
-            <!-- Products will be dynamically loaded here -->
+
+        <div class="category">
+            <h3>Categoría 2</h3>
+            <!-- Replace with dynamic content or links to category pages -->
+            <p>Contenido de la categoría 2</p>
+        </div>
+
+        <div class="category">
+            <h3>Categoría 3</h3>
+            <!-- Replace with dynamic content or links to category pages -->
+            <p>Contenido de la categoría 3</p>
+        </div>
+
+        <div class="category">
+            <h3>Categoría 4</h3>
+            <!-- Replace with dynamic content or links to category pages -->
+            <p>Contenido de la categoría 4</p>
+        </div>
+
+        <div class="contact-info">
+            <h2>Contacto</h2>
+            <p>Para comprar comuníquese por:</p>
+            <p>Teléfono: +56978566562</p>
+            <p>Dirección: Peñaflor, pasaje parroco agustpin lobos 2461</p>
         </div>
     </div>
-
-    <script>
-        // Function to retrieve products from localStorage
-        function getProductsFromStorage() {
-            var products = JSON.parse(localStorage.getItem('products')) || [];
-            return products;
-        }
-
-        // Function to display products of a specific category
-        function showCategory(category) {
-            var productList = document.getElementById('productos-list');
-            productList.innerHTML = ''; // Clear previous products
-
-            var products = getProductsFromStorage();
-
-            products.forEach(function(product) {
-                if (product.category === category) {
-                    var productElement = document.createElement('div');
-                    productElement.classList.add('product-item');
-
-                    // Create image element
-                    if (product.image) {
-                        var img = document.createElement('img');
-                        img.src = product.image;
-                        productElement.appendChild(img);
-                    }
-
-                    // Create name and price elements
-                    var productInfo = document.createElement('div');
-                    productInfo.innerHTML = '<strong>' + product.name + '</strong>';
-                    if (product.price) {
-                        productInfo.innerHTML += ' - Precio: ' + product.price + ' pesos';
-                    }
-                    productElement.appendChild(productInfo);
-
-                    productList.appendChild(productElement);
-                }
-            });
-        }
-
-        // Function to show selected page and hide others
-        function showPage(pageId) {
-            var pages = document.querySelectorAll('.content');
-            pages.forEach(function(page) {
-                page.style.display = 'none';
-            });
-            document.getElementById(pageId).style.display = 'block';
-
-            if (pageId === 'productos') {
-                showCategory('flores'); // Default category to show
-            }
-        }
-
-        // Show default page on initial load
-        document.addEventListener('DOMContentLoaded', function() {
-            showPage('productos'); // Show productos page by default
-        });
-    </script>
 </body>
 </html>
+
