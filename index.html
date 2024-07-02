@@ -34,7 +34,7 @@
         .category-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
+            justify-content: space-between;
             margin-top: 20px;
         }
 
@@ -45,6 +45,19 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover; /* Cover background image */
+            background-position: center center; /* Center background image */
+            position: relative; /* Positioning for overlay text */
+            color: #fff; /* Text color */
+            text-align: center; /* Center text */
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); /* Text shadow for contrast */
+        }
+
+        .category h3 {
+            margin: 0;
         }
 
         .contact-info {
@@ -63,27 +76,25 @@
         <h2>Productos</h2>
 
         <div class="category-container">
-            <div class="category">
+            <div class="category" id="flores-category">
                 <h3 id="flores-title">Categoría 1</h3>
-                <!-- Replace with dynamic content or links to category pages -->
                 <p id="flores-content">Contenido de la categoría 1</p>
             </div>
 
-            <div class="category">
+            <div class="category" id="árboles-category">
                 <h3 id="árboles-title">Categoría 2</h3>
-                <!-- Replace with dynamic content or links to category pages -->
                 <p id="árboles-content">Contenido de la categoría 2</p>
             </div>
+        </div>
 
-            <div class="category">
+        <div class="category-container">
+            <div class="category" id="herramientas-category">
                 <h3 id="herramientas-title">Categoría 3</h3>
-                <!-- Replace with dynamic content or links to category pages -->
                 <p id="herramientas-content">Contenido de la categoría 3</p>
             </div>
 
-            <div class="category">
+            <div class="category" id="macetas-category">
                 <h3 id="macetas-title">Categoría 4</h3>
-                <!-- Replace with dynamic content or links to category pages -->
                 <p id="macetas-content">Contenido de la categoría 4</p>
             </div>
         </div>
@@ -106,26 +117,11 @@
             document.getElementById('herramientas-title').textContent = categories.herramientas || 'Categoría 3';
             document.getElementById('macetas-title').textContent = categories.macetas || 'Categoría 4';
 
-            // Optionally load and set background images
-            var floresBg = localStorage.getItem('flores-bg');
-            if (floresBg) {
-                document.getElementById('flores-title').style.backgroundImage = `url(${floresBg})`;
-            }
-
-            var árbolesBg = localStorage.getItem('árboles-bg');
-            if (árbolesBg) {
-                document.getElementById('árboles-title').style.backgroundImage = `url(${árbolesBg})`;
-            }
-
-            var herramientasBg = localStorage.getItem('herramientas-bg');
-            if (herramientasBg) {
-                document.getElementById('herramientas-title').style.backgroundImage = `url(${herramientasBg})`;
-            }
-
-            var macetasBg = localStorage.getItem('macetas-bg');
-            if (macetasBg) {
-                document.getElementById('macetas-title').style.backgroundImage = `url(${macetasBg})`;
-            }
+            // Set background images
+            document.getElementById('flores-category').style.backgroundImage = `url('${localStorage.getItem('flores-bg')}')`;
+            document.getElementById('árboles-category').style.backgroundImage = `url('${localStorage.getItem('árboles-bg')}')`;
+            document.getElementById('herramientas-category').style.backgroundImage = `url('${localStorage.getItem('herramientas-bg')}')`;
+            document.getElementById('macetas-category').style.backgroundImage = `url('${localStorage.getItem('macetas-bg')}')`;
         }
 
         // Load categories on page load
@@ -135,4 +131,5 @@
     </script>
 </body>
 </html>
+
 
