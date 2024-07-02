@@ -5,32 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matisa Jardín</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0; /* Light gray background */
-            color: #333; /* Dark gray text color */
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            background-color: #fff; /* White container background */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-        }
-
-        h1 {
-            text-align: center;
-            color: #4CAF50; /* Green title color */
-        }
-
-        h2 {
-            color: #333;
-        }
-
+        /* Styling for categories (buttons) */
         .category-container {
             display: flex;
             flex-wrap: wrap;
@@ -39,7 +14,7 @@
         }
 
         .category {
-            width: 40%;
+            width: calc(50% - 10px); /* Adjusted to fit two categories in a row with space between */
             margin-bottom: 20px;
             background-color: #fff; /* White background for categories */
             padding: 20px;
@@ -54,17 +29,23 @@
             color: #fff; /* Text color */
             text-align: center; /* Center text */
             text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); /* Text shadow for contrast */
+            cursor: pointer; /* Cursor pointer for interaction */
         }
 
-        .category h3 {
-            margin: 0;
-        }
-
-        .contact-info {
+        /* Styling for items within categories */
+        .items-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
             margin-top: 20px;
-            padding: 20px;
-            background-color: #fff; /* White background for contact info */
-            border-radius: 10px;
+        }
+
+        .item {
+            width: calc(50% - 10px); /* Adjusted to fit two items in a row with space between */
+            margin-bottom: 20px;
+            background-color: #f0f0f0; /* Light background for items */
+            padding: 10px;
+            border-radius: 5px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
         }
     </style>
@@ -72,62 +53,53 @@
 <body>
     <div class="container">
         <h1>Matisa Jardín</h1>
-
-        <h2>Productos</h2>
-
+        
+        <!-- Categories (buttons) -->
         <div class="category-container">
-            <div class="category" id="flores-category">
-                <h3 id="flores-title">Categoría 1</h3>
-                <p id="flores-content"></p>
-            </div>
-
-            <div class="category" id="árboles-category">
-                <h3 id="árboles-title">Categoría 2</h3>
-                <p id="árboles-content"></p>
-            </div>
+            <div class="category" onclick="showItems('flores')">Flores</div>
+            <div class="category" onclick="showItems('árboles')">Árboles</div>
+            <!-- Add more categories as needed -->
         </div>
-
-        <div class="category-container">
-            <div class="category" id="herramientas-category">
-                <h3 id="herramientas-title">Categoría 3</h3>
-                <p id="herramientas-content"></p>
-            </div>
-
-            <div class="category" id="macetas-category">
-                <h3 id="macetas-title">Categoría 4</h3>
-                <p id="macetas-content"></p>
-            </div>
-        </div>
-
-        <div class="contact-info">
-            <h2>Contacto</h2>
-            <p>Para comprar comuníquese por:</p>
-            <p>Teléfono: +56978566562</p>
-            <p>Dirección: Peñaflor, pasaje parroco agustpin lobos 2461</p>
+        
+        <!-- Items within categories -->
+        <div class="items-container" id="items-container">
+            <!-- Items will be dynamically added here based on category selection -->
         </div>
     </div>
 
     <script>
-        // Function to load category names and backgrounds from localStorage
-        function loadCategories() {
-            var categories = JSON.parse(localStorage.getItem('categories')) || {};
+        // Function to show items based on category
+        function showItems(category) {
+            // Example: Replace with actual logic to fetch items from a data source (could be a database or hardcoded)
+            var items = [];
 
-            document.getElementById('flores-title').textContent = categories.flores || 'Categoría 1';
-            document.getElementById('árboles-title').textContent = categories.árboles || 'Categoría 2';
-            document.getElementById('herramientas-title').textContent = categories.herramientas || 'Categoría 3';
-            document.getElementById('macetas-title').textContent = categories.macetas || 'Categoría 4';
+            // Example items for demonstration
+            if (category === 'flores') {
+                items = [
+                    { name: 'Rosa', price: '10' },
+                    { name: 'Girasol', price: '8' },
+                    { name: 'Tulipán', price: '12' }
+                ];
+            } else if (category === 'árboles') {
+                items = [
+                    { name: 'Pino', price: '50' },
+                    { name: 'Roble', price: '40' },
+                    { name: 'Palmera', price: '30' }
+                ];
+            }
 
-            // Set background images
-            document.getElementById('flores-category').style.backgroundImage = `url('${localStorage.getItem('flores-bg')}')`;
-            document.getElementById('árboles-category').style.backgroundImage = `url('${localStorage.getItem('árboles-bg')}')`;
-            document.getElementById('herramientas-category').style.backgroundImage = `url('${localStorage.getItem('herramientas-bg')}')`;
-            document.getElementById('macetas-category').style.backgroundImage = `url('${localStorage.getItem('macetas-bg')}')`;
+            // Clear previous items
+            var itemsContainer = document.getElementById('items-container');
+            itemsContainer.innerHTML = '';
+
+            // Display items
+            items.forEach(function(item) {
+                var itemElement = document.createElement('div');
+                itemElement.classList.add('item');
+                itemElement.innerHTML = `<h3>${item.name}</h3><p>Precio: $${item.price}</p>`;
+                itemsContainer.appendChild(itemElement);
+            });
         }
-
-        // Load categories on page load
-        window.onload = function() {
-            loadCategories();
-        };
     </script>
 </body>
 </html>
