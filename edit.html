@@ -27,7 +27,7 @@
         <div id="productos" class="content active">
             <h2>Productos</h2>
             <div id="productos-list">
-                <p>Aquí se mostrarán los productos disponibles.</p>
+                <!-- Existing products will be loaded here -->
             </div>
             <div class="edit-buttons">
                 <button onclick="addProduct()">Agregar Producto</button>
@@ -55,6 +55,53 @@
     </div>
 
     <script>
+        // Function to retrieve products from localStorage
+        function getProductsFromStorage() {
+            var products = JSON.parse(localStorage.getItem('products')) || [];
+            return products;
+        }
+
+        // Function to save products to localStorage
+        function saveProductsToStorage(products) {
+            localStorage.setItem('products', JSON.stringify(products));
+        }
+
+        // Function to show saved products on page load
+        function showSavedProducts() {
+            var productList = document.getElementById('productos-list');
+            var products = getProductsFromStorage();
+
+            // Clear existing products to prevent duplicates
+            productList.innerHTML = '';
+
+            products.forEach(function(product) {
+                var productElement = document.createElement('div');
+                productElement.classList.add('product-item');
+
+                // Create image element
+                if (product.image) {
+                    var img = document.createElement('img');
+                    img.src = product.image;
+                    productElement.appendChild(img);
+                }
+
+                // Create name and price elements
+                var productInfo = document.createElement('div');
+                productInfo.innerHTML = '<strong>' + product.name + '</strong>';
+                if (product.price) {
+                    productInfo.innerHTML += ' - Precio: ' + product.price + ' pesos';
+                }
+                productElement.appendChild(productInfo);
+
+                productList.appendChild(productElement);
+            });
+        }
+
+        // Show saved products on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            showSavedProducts();
+        });
+
         function showPage(pageId) {
             var pages = document.querySelectorAll('.content');
             pages.forEach(function(page) {
@@ -82,27 +129,24 @@
             var productImage = document.getElementById('productImage').files[0];
             var productPrice = document.getElementById('productPrice').value;
 
-            // Create product element
-            var productList = document.getElementById('productos-list');
-            var newProduct = document.createElement('div');
-            newProduct.classList.add('product-item');
+            // Create new product object
+            var newProduct = {
+                name: productName,
+                image: productImage ? URL.createObjectURL(productImage) : null,
+                price: productPrice
+            };
 
-            // Add image if selected
-            if (productImage) {
-                var img = document.createElement('img');
-                img.src = URL.createObjectURL(productImage);
-                newProduct.appendChild(img);
-            }
+            // Get existing products from localStorage
+            var products = getProductsFromStorage();
 
-            // Add name and price
-            var productInfo = document.createElement('div');
-            productInfo.innerHTML = '<strong>' + productName + '</strong>';
-            if (productPrice) {
-                productInfo.innerHTML += ' - Precio: ' + productPrice + ' pesos';
-            }
-            newProduct.appendChild(productInfo);
+            // Add new product to array
+            products.push(newProduct);
 
-            productList.appendChild(newProduct);
+            // Save updated products back to localStorage
+            saveProductsToStorage(products);
+
+            // Update displayed products
+            showSavedProducts();
 
             // Close modal after adding product
             closeModal();
