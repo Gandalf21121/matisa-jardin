@@ -64,27 +64,27 @@
 
         <div class="category-container">
             <div class="category">
-                <h3>Categoría 1</h3>
+                <h3 id="flores-title">Categoría 1</h3>
                 <!-- Replace with dynamic content or links to category pages -->
-                <p>Contenido de la categoría 1</p>
+                <p id="flores-content">Contenido de la categoría 1</p>
             </div>
 
             <div class="category">
-                <h3>Categoría 2</h3>
+                <h3 id="árboles-title">Categoría 2</h3>
                 <!-- Replace with dynamic content or links to category pages -->
-                <p>Contenido de la categoría 2</p>
+                <p id="árboles-content">Contenido de la categoría 2</p>
             </div>
 
             <div class="category">
-                <h3>Categoría 3</h3>
+                <h3 id="herramientas-title">Categoría 3</h3>
                 <!-- Replace with dynamic content or links to category pages -->
-                <p>Contenido de la categoría 3</p>
+                <p id="herramientas-content">Contenido de la categoría 3</p>
             </div>
 
             <div class="category">
-                <h3>Categoría 4</h3>
+                <h3 id="macetas-title">Categoría 4</h3>
                 <!-- Replace with dynamic content or links to category pages -->
-                <p>Contenido de la categoría 4</p>
+                <p id="macetas-content">Contenido de la categoría 4</p>
             </div>
         </div>
 
@@ -95,5 +95,44 @@
             <p>Dirección: Peñaflor, pasaje parroco agustpin lobos 2461</p>
         </div>
     </div>
+
+    <script>
+        // Function to load category names and backgrounds from localStorage
+        function loadCategories() {
+            var categories = JSON.parse(localStorage.getItem('categories')) || {};
+
+            document.getElementById('flores-title').textContent = categories.flores || 'Categoría 1';
+            document.getElementById('árboles-title').textContent = categories.árboles || 'Categoría 2';
+            document.getElementById('herramientas-title').textContent = categories.herramientas || 'Categoría 3';
+            document.getElementById('macetas-title').textContent = categories.macetas || 'Categoría 4';
+
+            // Optionally load and set background images
+            var floresBg = localStorage.getItem('flores-bg');
+            if (floresBg) {
+                document.getElementById('flores-title').style.backgroundImage = `url(${floresBg})`;
+            }
+
+            var árbolesBg = localStorage.getItem('árboles-bg');
+            if (árbolesBg) {
+                document.getElementById('árboles-title').style.backgroundImage = `url(${árbolesBg})`;
+            }
+
+            var herramientasBg = localStorage.getItem('herramientas-bg');
+            if (herramientasBg) {
+                document.getElementById('herramientas-title').style.backgroundImage = `url(${herramientasBg})`;
+            }
+
+            var macetasBg = localStorage.getItem('macetas-bg');
+            if (macetasBg) {
+                document.getElementById('macetas-title').style.backgroundImage = `url(${macetasBg})`;
+            }
+        }
+
+        // Load categories on page load
+        window.onload = function() {
+            loadCategories();
+        };
+    </script>
 </body>
 </html>
+
