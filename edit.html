@@ -61,6 +61,11 @@
             margin-right: 10px;
             border-radius: 5px;
         }
+        .delete-product {
+            color: red;
+            cursor: pointer;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
@@ -145,8 +150,6 @@
 
         // Function to add a product to a specific category
         function addProduct(categoryId) {
-            var categoryName = document.getElementById(categoryId + '-name').value;
-            var productImage = document.getElementById(categoryId + '-image').files[0];
             var productName = prompt("Ingrese el nombre del producto:");
             var productPrice = prompt("Ingrese el precio del producto:");
 
@@ -154,10 +157,16 @@
                 var productList = document.getElementById(categoryId + '-products');
                 var newProduct = document.createElement('div');
                 newProduct.classList.add('product');
-                newProduct.innerHTML = '<img src="' + URL.createObjectURL(productImage) + '" alt="Product Image">' +
-                                       '<div><strong>' + productName + '</strong><br>Precio: ' + productPrice + '</div>';
+                newProduct.innerHTML = '<img src="" alt="Product Image">' +
+                                       '<div><strong>' + productName + '</strong><br>Precio: ' + productPrice + '</div>' +
+                                       '<span class="delete-product" onclick="deleteProduct(this)">Eliminar</span>';
                 productList.appendChild(newProduct);
             }
+        }
+
+        // Function to delete a product
+        function deleteProduct(element) {
+            element.parentNode.remove();
         }
 
         // Save changes function
@@ -172,13 +181,6 @@
 
             // Implement saving of category images as needed
             // Example: saveImageToStorage('category1Image', document.getElementById('category1-image').files[0]);
-        }
-
-        // Example function to save image to storage
-        function saveImageToStorage(imageName, file) {
-            // Implement logic to save image file to storage or database
-            console.log('Saving image: ' + imageName);
-            console.log(file);
         }
 
         // Event listeners for file input changes
