@@ -5,152 +5,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matisa Jardín - Edición</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .container { width: 80%; margin: 0 auto; }
-        nav { margin: 20px 0; }
-        nav button { margin-right: 10px; padding: 10px 20px; cursor: pointer; }
-        .content { display: none; }
-        .content.active { display: block; }
-        .edit-buttons { margin-top: 20px; }
-        .product-item { margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
-        .product-item img { max-width: 100px; max-height: 100px; margin-right: 10px; vertical-align: middle; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Light gray background */
+            color: #333; /* Dark gray text color */
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff; /* White container background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50; /* Green title color */
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        form input {
+            margin-bottom: 10px;
+            padding: 8px;
+            width: calc(100% - 16px);
+        }
+
+        form button {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #4CAF50; /* Green button */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
     </style>
     <script src="authentication.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Matisa Jardín - Edición</h1>
-        <nav>
-            <button onclick="showPage('productos')">Productos</button>
-            <button onclick="showPage('contacto')">Contacto</button>
-        </nav>
-        <div id="productos" class="content active">
-            <h2>Productos</h2>
-            <div id="productos-list">
-                <!-- Existing products will be loaded here -->
-            </div>
-            <div class="edit-buttons">
-                <button onclick="addProduct()">Agregar Producto</button>
-            </div>
-        </div>
-        <div id="contacto" class="content">
-            <h2>Contacto</h2>
-            <p>Aquí se mostrará la información de contacto.</p>
-        </div>
-    </div>
 
-    <!-- Modal for adding product with image -->
-    <div id="addProductModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Agregar Producto</h2>
-            <label for="productName">Nombre del Producto:</label>
-            <input type="text" id="productName">
-            <label for="productImage">Imagen del Producto:</label>
-            <input type="file" id="productImage" accept="image/*">
-            <label for="productPrice">Precio del Producto:</label>
-            <input type="number" id="productPrice">
-            <button onclick="saveProduct()">Guardar Producto</button>
-        </div>
+        <h2>Editar Categorías</h2>
+        <form id="category-form">
+            <label for="flores">Flores:</label>
+            <input type="text" id="flores" placeholder="Nombre de la categoría">
+            <br>
+
+            <label for="árboles">Árboles:</label>
+            <input type="text" id="árboles" placeholder="Nombre de la categoría">
+            <br>
+
+            <label for="herramientas">Herramientas de Jardín:</label>
+            <input type="text" id="herramientas" placeholder="Nombre de la categoría">
+            <br>
+
+            <label for="macetas">Macetas:</label>
+            <input type="text" id="macetas" placeholder="Nombre de la categoría">
+            <br>
+
+            <button type="button" onclick="saveCategories()">Guardar Categorías</button>
+        </form>
+
+        <h2>Agregar Productos</h2>
+        <form id="product-form">
+            <label for="category">Categoría:</label>
+            <select id="category">
+                <option value="flores">Flores</option>
+                <option value="árboles">Árboles</option>
+                <option value="herramientas">Herramientas de Jardín</option>
+                <option value="macetas">Macetas</option>
+            </select>
+            <br>
+
+            <label for="name">Nombre del Producto:</label>
+            <input type="text" id="name" placeholder="Nombre del producto">
+            <br>
+
+            <label for="image">Imagen:</label>
+            <input type="file" id="image">
+            <br>
+
+            <label for="price">Precio:</label>
+            <input type="text" id="price" placeholder="Precio del producto">
+            <br>
+
+            <button type="button" onclick="addProduct()">Agregar Producto</button>
+        </form>
     </div>
 
     <script>
-        // Function to retrieve products from localStorage
-        function getProductsFromStorage() {
-            var products = JSON.parse(localStorage.getItem('products')) || [];
-            return products;
-        }
+        function saveCategories() {
+            var flores = document.getElementById('flores').value.trim();
+            var árboles = document.getElementById('árboles').value.trim();
+            var herramientas = document.getElementById('herramientas').value.trim();
+            var macetas = document.getElementById('macetas').value.trim();
 
-        // Function to save products to localStorage
-        function saveProductsToStorage(products) {
-            localStorage.setItem('products', JSON.stringify(products));
-        }
+            // Save categories to localStorage
+            localStorage.setItem('categories', JSON.stringify({
+                flores: flores || 'Flores',
+                árboles: árboles || 'Árboles',
+                herramientas: herramientas || 'Herramientas de Jardín',
+                macetas: macetas || 'Macetas'
+            }));
 
-        // Function to show saved products on page load
-        function showSavedProducts() {
-            var productList = document.getElementById('productos-list');
-            var products = getProductsFromStorage();
-
-            // Clear existing products to prevent duplicates
-            productList.innerHTML = '';
-
-            products.forEach(function(product) {
-                var productElement = document.createElement('div');
-                productElement.classList.add('product-item');
-
-                // Create image element
-                if (product.image) {
-                    var img = document.createElement('img');
-                    img.src = product.image;
-                    productElement.appendChild(img);
-                }
-
-                // Create name and price elements
-                var productInfo = document.createElement('div');
-                productInfo.innerHTML = '<strong>' + product.name + '</strong>';
-                if (product.price) {
-                    productInfo.innerHTML += ' - Precio: ' + product.price + ' pesos';
-                }
-                productElement.appendChild(productInfo);
-
-                productList.appendChild(productElement);
-            });
-        }
-
-        // Show saved products on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            showSavedProducts();
-        });
-
-        function showPage(pageId) {
-            var pages = document.querySelectorAll('.content');
-            pages.forEach(function(page) {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
+            alert('Categorías guardadas correctamente.');
         }
 
         function addProduct() {
-            var modal = document.getElementById('addProductModal');
-            modal.style.display = 'block';
-        }
+            var category = document.getElementById('category').value;
+            var name = document.getElementById('name').value.trim();
+            var price = document.getElementById('price').value.trim();
+            var image = document.getElementById('image').files[0];
 
-        function closeModal() {
-            var modal = document.getElementById('addProductModal');
-            modal.style.display = 'none';
-            // Clear input fields after closing modal
-            document.getElementById('productName').value = '';
-            document.getElementById('productImage').value = '';
-            document.getElementById('productPrice').value = '';
-        }
+            // Validate inputs
+            if (!name || !price || !image) {
+                alert('Por favor complete todos los campos.');
+                return;
+            }
 
-        function saveProduct() {
-            var productName = document.getElementById('productName').value;
-            var productImage = document.getElementById('productImage').files[0];
-            var productPrice = document.getElementById('productPrice').value;
+            // Read image as base64 string
+            var reader = new FileReader();
+            reader.readAsDataURL(image);
+            reader.onload = function() {
+                var products = JSON.parse(localStorage.getItem('products')) || [];
 
-            // Create new product object
-            var newProduct = {
-                name: productName,
-                image: productImage ? URL.createObjectURL(productImage) : null,
-                price: productPrice
+                // Add new product
+                products.push({
+                    category: category,
+                    name: name,
+                    price: price,
+                    image: reader.result
+                });
+
+                // Save updated products to localStorage
+                localStorage.setItem('products', JSON.stringify(products));
+
+                alert('Producto agregado correctamente.');
+
+                // Clear form inputs
+                document.getElementById('name').value = '';
+                document.getElementById('price').value = '';
+                document.getElementById('image').value = '';
             };
-
-            // Get existing products from localStorage
-            var products = getProductsFromStorage();
-
-            // Add new product to array
-            products.push(newProduct);
-
-            // Save updated products back to localStorage
-            saveProductsToStorage(products);
-
-            // Update displayed products
-            showSavedProducts();
-
-            // Close modal after adding product
-            closeModal();
         }
     </script>
 </body>
 </html>
+
