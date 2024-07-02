@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Categorías - Matisa Jardín</title>
+    <title>Editar Categorías y Productos - Matisa Jardín</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,11 +44,28 @@
             border-radius: 10px;
             margin-bottom: 20px;
         }
+        .product-list {
+            margin-top: 20px;
+        }
+        .product {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .product img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Editar Categorías</h1>
+        <h1>Editar Categorías y Productos</h1>
         
         <!-- Category 1 -->
         <div class="form-group">
@@ -60,6 +77,10 @@
             <div class="category-preview" id="category1-preview"></div>
             <input type="file" id="category1-image" accept="image/*">
         </div>
+        <div class="product-list" id="category1-products">
+            <!-- Products for Category 1 will be added here dynamically -->
+        </div>
+        <button onclick="addProduct('category1')">Agregar Producto a Categoría 1</button>
 
         <!-- Category 2 -->
         <div class="form-group">
@@ -71,6 +92,10 @@
             <div class="category-preview" id="category2-preview"></div>
             <input type="file" id="category2-image" accept="image/*">
         </div>
+        <div class="product-list" id="category2-products">
+            <!-- Products for Category 2 will be added here dynamically -->
+        </div>
+        <button onclick="addProduct('category2')">Agregar Producto a Categoría 2</button>
 
         <!-- Category 3 -->
         <div class="form-group">
@@ -82,6 +107,10 @@
             <div class="category-preview" id="category3-preview"></div>
             <input type="file" id="category3-image" accept="image/*">
         </div>
+        <div class="product-list" id="category3-products">
+            <!-- Products for Category 3 will be added here dynamically -->
+        </div>
+        <button onclick="addProduct('category3')">Agregar Producto a Categoría 3</button>
 
         <!-- Category 4 -->
         <div class="form-group">
@@ -93,6 +122,10 @@
             <div class="category-preview" id="category4-preview"></div>
             <input type="file" id="category4-image" accept="image/*">
         </div>
+        <div class="product-list" id="category4-products">
+            <!-- Products for Category 4 will be added here dynamically -->
+        </div>
+        <button onclick="addProduct('category4')">Agregar Producto a Categoría 4</button>
 
         <button onclick="guardarCambios()">Guardar Cambios</button>
     </div>
@@ -107,6 +140,23 @@
                     document.getElementById(previewId).style.backgroundImage = 'url(' + e.target.result + ')';
                 };
                 reader.readAsDataURL(file);
+            }
+        }
+
+        // Function to add a product to a specific category
+        function addProduct(categoryId) {
+            var categoryName = document.getElementById(categoryId + '-name').value;
+            var productImage = document.getElementById(categoryId + '-image').files[0];
+            var productName = prompt("Ingrese el nombre del producto:");
+            var productPrice = prompt("Ingrese el precio del producto:");
+
+            if (productName && productPrice) {
+                var productList = document.getElementById(categoryId + '-products');
+                var newProduct = document.createElement('div');
+                newProduct.classList.add('product');
+                newProduct.innerHTML = '<img src="' + URL.createObjectURL(productImage) + '" alt="Product Image">' +
+                                       '<div><strong>' + productName + '</strong><br>Precio: ' + productPrice + '</div>';
+                productList.appendChild(newProduct);
             }
         }
 
@@ -147,3 +197,4 @@
     </script>
 </body>
 </html>
+
