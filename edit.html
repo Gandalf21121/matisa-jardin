@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matisa Jardín - Edición</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { width: 80%; margin: 0 auto; }
+        nav { margin: 20px 0; }
+        nav button { margin-right: 10px; padding: 10px 20px; cursor: pointer; }
+        .content { display: none; }
+        .content.active { display: block; }
+        .edit-buttons { margin-top: 20px; }
+    </style>
+    <script src="authentication.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Matisa Jardín - Edición</h1>
+        <nav>
+            <button onclick="showPage('productos')">Productos</button>
+            <button onclick="showPage('contacto')">Contacto</button>
+        </nav>
+        <div id="productos" class="content active">
+            <h2>Productos</h2>
+            <div id="productos-list">
+                <p>Aquí se mostrarán los productos disponibles.</p>
+            </div>
+            <div class="edit-buttons">
+                <button onclick="addProduct()">Agregar Producto</button>
+            </div>
+        </div>
+        <div id="contacto" class="content">
+            <h2>Contacto</h2>
+            <p>Aquí se mostrará la información de contacto.</p>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            var pages = document.querySelectorAll('.content');
+            pages.forEach(function(page) {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function addProduct() {
+            var productName = prompt("Ingrese el nombre del producto:");
+            if (productName) {
+                var productList = document.getElementById('productos-list');
+                var newProduct = document.createElement('p');
+                newProduct.textContent = productName;
+                productList.appendChild(newProduct);
+            }
+        }
+    </script>
+</body>
+</html>
