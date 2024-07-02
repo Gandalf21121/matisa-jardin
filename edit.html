@@ -143,6 +143,8 @@
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById(previewId).style.backgroundImage = 'url(' + e.target.result + ')';
+                    // Save image data to local storage
+                    localStorage.setItem(previewId + '-image', e.target.result);
                 };
                 reader.readAsDataURL(file);
             }
@@ -171,16 +173,22 @@
 
         // Save changes function
         function guardarCambios() {
-            var category1Name = document.getElementById('category1-name').value;
-            var category2Name = document.getElementById('category2-name').value;
-            var category3Name = document.getElementById('category3-name').value;
-            var category4Name = document.getElementById('category4-name').value;
+            var categories = [];
+            
+            for (var i = 1; i <= 4; i++) {
+                var categoryName = document.getElementById('category' + i + '-name').value;
+                var categoryImage = localStorage.getItem('category' + i + '-preview-image');
+                var products = [];
+                document.querySelectorAll('#category' + i + '-products .product').forEach(function(productElement) {
+                    var productName = productElement.querySelector('strong').innerText;
+                    var productPrice = productElement.querySelector('div').innerText.replace('Precio: ', '');
+                    products.push({ name: productName, price: productPrice });
+                });
+                categories.push({ name: categoryName, image: categoryImage, products: products });
+            }
 
-            // Save category names to storage or database
-            // Example: localStorage.setItem('category1Name', category1Name);
-
-            // Implement saving of category images as needed
-            // Example: saveImageToStorage('category1Image', document.getElementById('category1-image').files[0]);
+            localStorage.setItem('categories', JSON.stringify(categories));
+            alert('Cambios guardados');
         }
 
         // Event listeners for file input changes
@@ -199,6 +207,7 @@
     </script>
 </body>
 </html>
+
 
 
 
