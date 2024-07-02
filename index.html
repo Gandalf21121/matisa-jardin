@@ -7,37 +7,58 @@
     <style>
         body { font-family: Arial, sans-serif; }
         .container { width: 80%; margin: 0 auto; }
-        nav { margin: 20px 0; }
-        nav button { margin-right: 10px; padding: 10px 20px; cursor: pointer; }
-        .content { display: none; }
-        .content.active { display: block; }
+        .product-item { margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+        .product-item img { max-width: 100px; max-height: 100px; margin-right: 10px; vertical-align: middle; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Matisa Jardín</h1>
-        <nav>
-            <button onclick="showPage('productos')">Productos</button>
-            <button onclick="showPage('contacto')">Contacto</button>
-        </nav>
-        <div id="productos" class="content active">
-            <h2>Productos</h2>
-            <p>Aquí se mostrarán los productos disponibles.</p>
-        </div>
-        <div id="contacto" class="content">
-            <h2>Contacto</h2>
-            <p>Aquí se mostrará la información de contacto.</p>
+        <h2>Productos Disponibles</h2>
+        <div id="productos-list">
+            <!-- Products will be dynamically loaded here -->
         </div>
     </div>
 
     <script>
-        function showPage(pageId) {
-            var pages = document.querySelectorAll('.content');
-            pages.forEach(function(page) {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
+        // Function to retrieve products from localStorage
+        function getProductsFromStorage() {
+            var products = JSON.parse(localStorage.getItem('products')) || [];
+            return products;
         }
+
+        // Function to display products on the page
+        function displayProducts() {
+            var productList = document.getElementById('productos-list');
+            var products = getProductsFromStorage();
+
+            products.forEach(function(product) {
+                var productElement = document.createElement('div');
+                productElement.classList.add('product-item');
+
+                // Create image element
+                if (product.image) {
+                    var img = document.createElement('img');
+                    img.src = product.image;
+                    productElement.appendChild(img);
+                }
+
+                // Create name and price elements
+                var productInfo = document.createElement('div');
+                productInfo.innerHTML = '<strong>' + product.name + '</strong>';
+                if (product.price) {
+                    productInfo.innerHTML += ' - Precio: ' + product.price + ' pesos';
+                }
+                productElement.appendChild(productInfo);
+
+                productList.appendChild(productElement);
+            });
+        }
+
+        // Show saved products on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            displayProducts();
+        });
     </script>
 </body>
 </html>
