@@ -1,84 +1,149 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matisa Jardín - Edición</title>
+    <title>Editar Categorías - Matisa Jardín</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .container { width: 80%; margin: 0 auto; }
-        nav { margin: 20px 0; }
-        nav button { margin-right: 10px; padding: 10px 20px; cursor: pointer; }
-        .content { display: none; }
-        .content.active { display: block; }
-        .edit-buttons { margin-top: 20px; }
-        /* Style for form inputs */
-        form { margin-top: 20px; }
-        form label { display: block; margin-bottom: 5px; }
-        form input[type="text"], form input[type="file"], form input[type="number"] { width: 100%; padding: 8px; margin-bottom: 10px; }
-        form button { padding: 10px 20px; cursor: pointer; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .category-preview {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
     </style>
-    <script src="authentication.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Matisa Jardín - Edición</h1>
-        <nav>
-            <button onclick="showPage('productos')">Productos</button>
-            <button onclick="showPage('contacto')">Contacto</button>
-        </nav>
-        <div id="productos" class="content active">
-            <h2>Productos</h2>
-            <!-- Form to add products -->
-            <form id="addProductForm">
-                <label for="category">Seleccionar categoría:</label>
-                <select id="category" name="category">
-                    <option value="flores">Flores</option>
-                    <option value="árboles">Árboles</option>
-                    <!-- Add more categories as needed -->
-                </select>
-                <label for="productName">Nombre del producto:</label>
-                <input type="text" id="productName" name="productName" required>
-                <label for="productImage">Imagen del producto:</label>
-                <input type="file" id="productImage" name="productImage" accept="image/*" required>
-                <label for="productPrice">Precio del producto:</label>
-                <input type="number" id="productPrice" name="productPrice" required>
-                <button type="submit" onclick="addProduct(event)">Agregar Producto</button>
-            </form>
+        <h1>Editar Categorías</h1>
+        
+        <!-- Category 1 -->
+        <div class="form-group">
+            <label for="category1-name">Nombre de la Categoría 1:</label>
+            <input type="text" id="category1-name" placeholder="Ingrese el nombre de la categoría">
         </div>
-        <div id="contacto" class="content">
-            <h2>Contacto</h2>
-            <p>Aquí se mostrará la información de contacto.</p>
+        <div class="form-group">
+            <label>Imagen de Fondo de la Categoría 1:</label>
+            <div class="category-preview" id="category1-preview"></div>
+            <input type="file" id="category1-image" accept="image/*">
         </div>
+
+        <!-- Category 2 -->
+        <div class="form-group">
+            <label for="category2-name">Nombre de la Categoría 2:</label>
+            <input type="text" id="category2-name" placeholder="Ingrese el nombre de la categoría">
+        </div>
+        <div class="form-group">
+            <label>Imagen de Fondo de la Categoría 2:</label>
+            <div class="category-preview" id="category2-preview"></div>
+            <input type="file" id="category2-image" accept="image/*">
+        </div>
+
+        <!-- Category 3 -->
+        <div class="form-group">
+            <label for="category3-name">Nombre de la Categoría 3:</label>
+            <input type="text" id="category3-name" placeholder="Ingrese el nombre de la categoría">
+        </div>
+        <div class="form-group">
+            <label>Imagen de Fondo de la Categoría 3:</label>
+            <div class="category-preview" id="category3-preview"></div>
+            <input type="file" id="category3-image" accept="image/*">
+        </div>
+
+        <!-- Category 4 -->
+        <div class="form-group">
+            <label for="category4-name">Nombre de la Categoría 4:</label>
+            <input type="text" id="category4-name" placeholder="Ingrese el nombre de la categoría">
+        </div>
+        <div class="form-group">
+            <label>Imagen de Fondo de la Categoría 4:</label>
+            <div class="category-preview" id="category4-preview"></div>
+            <input type="file" id="category4-image" accept="image/*">
+        </div>
+
+        <button onclick="guardarCambios()">Guardar Cambios</button>
     </div>
 
     <script>
-        function showPage(pageId) {
-            var pages = document.querySelectorAll('.content');
-            pages.forEach(function(page) {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
+        // Function to handle file input change for category images
+        function handleFileInput(input, previewId) {
+            var file = input.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(previewId).style.backgroundImage = 'url(' + e.target.result + ')';
+                };
+                reader.readAsDataURL(file);
+            }
         }
 
-        function addProduct(event) {
-            event.preventDefault(); // Prevent form submission
-            var category = document.getElementById('category').value;
-            var productName = document.getElementById('productName').value;
-            var productImage = document.getElementById('productImage').files[0];
-            var productPrice = document.getElementById('productPrice').value;
+        // Save changes function
+        function guardarCambios() {
+            var category1Name = document.getElementById('category1-name').value;
+            var category2Name = document.getElementById('category2-name').value;
+            var category3Name = document.getElementById('category3-name').value;
+            var category4Name = document.getElementById('category4-name').value;
 
-            // Example: You can save this data to localStorage or send it to a server/database
-            console.log("Category:", category);
-            console.log("Product Name:", productName);
-            console.log("Product Image:", productImage);
-            console.log("Product Price:", productPrice);
+            // Save category names to storage or database
+            // Example: localStorage.setItem('category1Name', category1Name);
 
-            // Clear form fields after adding product (optional)
-            document.getElementById('productName').value = '';
-            document.getElementById('productImage').value = '';
-            document.getElementById('productPrice').value = '';
+            // Implement saving of category images as needed
+            // Example: saveImageToStorage('category1Image', document.getElementById('category1-image').files[0]);
         }
+
+        // Example function to save image to storage
+        function saveImageToStorage(imageName, file) {
+            // Implement logic to save image file to storage or database
+            console.log('Saving image: ' + imageName);
+            console.log(file);
+        }
+
+        // Event listeners for file input changes
+        document.getElementById('category1-image').addEventListener('change', function() {
+            handleFileInput(this, 'category1-preview');
+        });
+        document.getElementById('category2-image').addEventListener('change', function() {
+            handleFileInput(this, 'category2-preview');
+        });
+        document.getElementById('category3-image').addEventListener('change', function() {
+            handleFileInput(this, 'category3-preview');
+        });
+        document.getElementById('category4-image').addEventListener('change', function() {
+            handleFileInput(this, 'category4-preview');
+        });
     </script>
 </body>
 </html>
