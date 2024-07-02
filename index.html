@@ -3,54 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matisa Jardín - Edición</title>
+    <title>Matisa Jardín</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .container { width: 80%; margin: 0 auto; }
-        nav { margin: 20px 0; }
-        nav button { margin-right: 10px; padding: 10px 20px; cursor: pointer; }
-        .content { display: none; }
-        .content.active { display: block; }
-        .edit-buttons { margin-top: 20px; }
-        .product-item { margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
-        .product-item img { max-width: 100px; max-height: 100px; margin-right: 10px; vertical-align: middle; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Light gray background */
+            color: #333; /* Dark gray text color */
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff; /* White container background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50; /* Green title color */
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        #productos-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .product-item {
+            width: 300px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-item img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .product-info {
+            color: #666;
+        }
+
+        .edit-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .edit-buttons button {
+            padding: 10px 20px;
+            background-color: #4CAF50; /* Green button */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .edit-buttons button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
     </style>
-    <script src="authentication.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>Matisa Jardín - Edición</h1>
-        <nav>
-            <button onclick="showPage('productos')">Productos</button>
-            <button onclick="showPage('contacto')">Contacto</button>
-        </nav>
-        <div id="productos" class="content active">
-            <h2>Productos</h2>
-            <div id="productos-list">
-                <!-- Existing products will be loaded here -->
-            </div>
-            <div class="edit-buttons">
-                <button onclick="addProduct()">Agregar Producto</button>
-            </div>
-        </div>
-        <div id="contacto" class="content">
-            <h2>Contacto</h2>
-            <p>Aquí se mostrará la información de contacto.</p>
-        </div>
-    </div>
-
-    <!-- Modal for adding product with image -->
-    <div id="addProductModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Agregar Producto</h2>
-            <label for="productName">Nombre del Producto:</label>
-            <input type="text" id="productName">
-            <label for="productImage">Imagen del Producto:</label>
-            <input type="file" id="productImage" accept="image/*">
-            <label for="productPrice">Precio del Producto:</label>
-            <input type="number" id="productPrice">
-            <button onclick="saveProduct()">Guardar Producto</button>
+        <h1>Matisa Jardín</h1>
+        <h2>Productos Disponibles</h2>
+        <div id="productos-list">
+            <!-- Products will be dynamically loaded here -->
         </div>
     </div>
 
@@ -61,18 +95,10 @@
             return products;
         }
 
-        // Function to save products to localStorage
-        function saveProductsToStorage(products) {
-            localStorage.setItem('products', JSON.stringify(products));
-        }
-
-        // Function to show saved products on page load
-        function showSavedProducts() {
+        // Function to display products on the page
+        function displayProducts() {
             var productList = document.getElementById('productos-list');
             var products = getProductsFromStorage();
-
-            // Clear existing products to prevent duplicates
-            productList.innerHTML = '';
 
             products.forEach(function(product) {
                 var productElement = document.createElement('div');
@@ -87,6 +113,7 @@
 
                 // Create name and price elements
                 var productInfo = document.createElement('div');
+                productInfo.classList.add('product-info');
                 productInfo.innerHTML = '<strong>' + product.name + '</strong>';
                 if (product.price) {
                     productInfo.innerHTML += ' - Precio: ' + product.price + ' pesos';
@@ -99,58 +126,8 @@
 
         // Show saved products on page load
         document.addEventListener('DOMContentLoaded', function() {
-            showSavedProducts();
+            displayProducts();
         });
-
-        function showPage(pageId) {
-            var pages = document.querySelectorAll('.content');
-            pages.forEach(function(page) {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-        }
-
-        function addProduct() {
-            var modal = document.getElementById('addProductModal');
-            modal.style.display = 'block';
-        }
-
-        function closeModal() {
-            var modal = document.getElementById('addProductModal');
-            modal.style.display = 'none';
-            // Clear input fields after closing modal
-            document.getElementById('productName').value = '';
-            document.getElementById('productImage').value = '';
-            document.getElementById('productPrice').value = '';
-        }
-
-        function saveProduct() {
-            var productName = document.getElementById('productName').value;
-            var productImage = document.getElementById('productImage').files[0];
-            var productPrice = document.getElementById('productPrice').value;
-
-            // Create new product object
-            var newProduct = {
-                name: productName,
-                image: productImage ? URL.createObjectURL(productImage) : null,
-                price: productPrice
-            };
-
-            // Get existing products from localStorage
-            var products = getProductsFromStorage();
-
-            // Add new product to array
-            products.push(newProduct);
-
-            // Save updated products back to localStorage
-            saveProductsToStorage(products);
-
-            // Update displayed products
-            showSavedProducts();
-
-            // Close modal after adding product
-            closeModal();
-        }
     </script>
 </body>
 </html>
