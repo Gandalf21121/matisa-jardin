@@ -69,11 +69,11 @@
             const categories = JSON.parse(localStorage.getItem('categories')) || [];
             const categoryContainer = document.querySelector('.category-container');
             categoryContainer.innerHTML = '';
-    
+        
             categories.forEach(function(category, index) {
                 var categoryDiv = document.createElement('div');
                 categoryDiv.classList.add('category');
-                categoryDiv.style.backgroundImage = `url('${category.image}')`;
+                categoryDiv.style.backgroundImage = `url('${category.image}')`; // Ensure category.image matches what is stored
                 categoryDiv.innerHTML = `
                     <button class="category-title" onclick="toggleProducts(${index})">${category.name}</button>
                     <div class="category-products" id="category-products-${index}">
