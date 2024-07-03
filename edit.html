@@ -160,53 +160,30 @@
         // Function to add a product to a specific category
 
         function addProduct(categoryId) {
-
             var productName = prompt("Ingrese el nombre del producto:");
-
             var productPrice = prompt("Ingrese el precio del producto:");
-
-
-
-            // Create a file input element for the product image
-
+        
             var productImageInput = document.createElement('input');
-
             productImageInput.type = 'file';
-
             productImageInput.accept = 'image/*';
-
             productImageInput.onchange = function(event) {
-
                 var reader = new FileReader();
-
                 reader.onload = function(e) {
-
                     var productList = document.getElementById(categoryId + '-products');
-
                     var newProduct = document.createElement('div');
-
                     newProduct.classList.add('product');
-
                     newProduct.innerHTML = '<img src="' + e.target.result + '" alt="Product Image">' +
-
                                            '<div><strong>' + productName + '</strong><br>Precio: ' + productPrice + '</div>' +
-
                                            '<span class="delete-product" onclick="deleteProduct(this)">Eliminar</span>';
-
                     productList.appendChild(newProduct);
-
+        
+                    // Save product image to localStorage
+                    localStorage.setItem(categoryId + '-product-image-' + productName, e.target.result);
                 };
-
                 reader.readAsDataURL(event.target.files[0]);
-
             };
-
-
-
             productImageInput.click();
-
         }
-
 
 
         // Function to delete a product
