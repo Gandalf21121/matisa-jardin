@@ -228,13 +228,13 @@
         
             for (var i = 1; i <= 4; i++) {
                 var categoryName = document.getElementById('category' + i + '-name').value;
-                var categoryImage = localStorage.getItem('category' + i + '-preview-image'); // Corrected key name
+                var categoryImage = localStorage.getItem('category' + i + '-image');
                 var products = [];
         
                 document.querySelectorAll('#category' + i + '-products .product').forEach(function(productElement) {
                     var productName = productElement.querySelector('strong').innerText;
                     var productPrice = productElement.querySelector('div').innerText.replace('Precio: ', '');
-                    var productImage = productElement.querySelector('img').src; // Save product image src
+                    var productImage = productElement.querySelector('img').src;
                     products.push({ name: productName, price: productPrice, image: productImage });
                 });
         
@@ -244,7 +244,6 @@
             localStorage.setItem('categories', JSON.stringify(categories));
             alert('Cambios guardados');
         }
-
 
         // Event listeners for file input changes
 
