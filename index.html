@@ -61,15 +61,12 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            loadCategories();
-        });
-
-       function loadCategories() {
+        // Function to load categories and their products
+        function loadCategories() {
             const categories = JSON.parse(localStorage.getItem('categories')) || [];
             const categoryContainer = document.querySelector('.category-container');
             categoryContainer.innerHTML = '';
-       
+    
             categories.forEach(function(category, index) {
                 var categoryDiv = document.createElement('div');
                 categoryDiv.classList.add('category');
@@ -88,16 +85,19 @@
                 categoryContainer.appendChild(categoryDiv);
             });
         }
-
+    
+        // Function to toggle display of category products
         function toggleProducts(index) {
-            const productsDiv = document.getElementById(`category-products-${index}`);
-            if (productsDiv.style.display === 'none' || productsDiv.style.display === '') {
-                productsDiv.style.display = 'block';
-            } else {
-                productsDiv.style.display = 'none';
-            }
+            var productsDiv = document.getElementById(`category-products-${index}`);
+            productsDiv.classList.toggle('active');
         }
+    
+        // Initial load of categories
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCategories();
+        });
     </script>
+
 </body>
 </html>
 
