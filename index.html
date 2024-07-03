@@ -11,8 +11,12 @@
             padding: 20px;
         }
         .container {
-            width: 40%;
-            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap-reverse; /* Items wrap from right to left */
+            justify-content: flex-start; /* Items start from the left */
+            width: 100%; /* Use full width of the parent */
+            gap: 20px; /* Gap between containers */
+            margin-bottom: 20px; /* Optional: Space at the bottom */
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
