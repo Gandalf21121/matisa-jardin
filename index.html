@@ -37,6 +37,7 @@
         }
         .category-products {
             margin-top: 10px;
+            display: none; /* Initially hide products */
         }
         .product {
             background-color: rgba(255, 255, 255, 0.8);
@@ -74,8 +75,8 @@
                 categoryDiv.classList.add('category');
                 categoryDiv.style.backgroundImage = `url('${category.image}')`;
                 categoryDiv.innerHTML = `
-                    <span class="category-title">${category.name}</span>
-                    <div class="category-products">
+                    <button class="category-title" onclick="toggleProducts(${index})">${category.name}</button>
+                    <div class="category-products" id="category-products-${index}">
                         ${category.products.map(product => `
                             <div class="product">
                                 <img src="" alt="Product Image">
@@ -87,8 +88,19 @@
                 categoryContainer.appendChild(categoryDiv);
             });
         }
+
+        function toggleProducts(index) {
+            const productsDiv = document.getElementById(`category-products-${index}`);
+            if (productsDiv.style.display === 'none' || productsDiv.style.display === '') {
+                productsDiv.style.display = 'block';
+            } else {
+                productsDiv.style.display = 'none';
+            }
+        }
     </script>
 </body>
+</html>
+
 </html>
 
 
