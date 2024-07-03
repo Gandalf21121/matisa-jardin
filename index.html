@@ -65,11 +65,11 @@
             loadCategories();
         });
 
-        function loadCategories() {
+       function loadCategories() {
             const categories = JSON.parse(localStorage.getItem('categories')) || [];
             const categoryContainer = document.querySelector('.category-container');
             categoryContainer.innerHTML = '';
-
+       
             categories.forEach(function(category, index) {
                 var categoryDiv = document.createElement('div');
                 categoryDiv.classList.add('category');
@@ -79,7 +79,7 @@
                     <div class="category-products" id="category-products-${index}">
                         ${category.products.map(product => `
                             <div class="product">
-                                <img src="" alt="Product Image">
+                                <img src="${product.image}" alt="Product Image"> <!-- Display product image -->
                                 <div><strong>${product.name}</strong><br>Precio: ${product.price}</div>
                             </div>
                         `).join('')}
