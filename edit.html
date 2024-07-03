@@ -183,7 +183,7 @@
         // Save changes function
         function guardarCambios() {
             var categories = [];
-            
+        
             for (var i = 1; i <= 4; i++) {
                 var categoryName = document.getElementById('category' + i + '-name').value;
                 var categoryImage = localStorage.getItem('category' + i + '-preview-image');
@@ -191,14 +191,16 @@
                 document.querySelectorAll('#category' + i + '-products .product').forEach(function(productElement) {
                     var productName = productElement.querySelector('strong').innerText;
                     var productPrice = productElement.querySelector('div').innerText.replace('Precio: ', '');
-                    products.push({ name: productName, price: productPrice });
+                    var productImage = productElement.querySelector('img').src; // Save product image src
+                    products.push({ name: productName, price: productPrice, image: productImage });
                 });
                 categories.push({ name: categoryName, image: categoryImage, products: products });
             }
-
+        
             localStorage.setItem('categories', JSON.stringify(categories));
             alert('Cambios guardados');
         }
+
 
         // Event listeners for file input changes
         document.getElementById('category1-image').addEventListener('change', function() {
