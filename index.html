@@ -73,13 +73,13 @@
             categories.forEach(function(category, index) {
                 var categoryDiv = document.createElement('div');
                 categoryDiv.classList.add('category');
-                categoryDiv.style.backgroundImage = `url('${category.image}')`; // Ensure category.image matches what is stored
+                categoryDiv.style.backgroundImage = `url('${category.image}')`;
                 categoryDiv.innerHTML = `
                     <button class="category-title" onclick="toggleProducts(${index})">${category.name}</button>
                     <div class="category-products" id="category-products-${index}">
                         ${category.products.map(product => `
                             <div class="product">
-                                <img src="${product.image}" alt="Product Image"> <!-- Display product image -->
+                                <img src="${localStorage.getItem('category' + (index + 1) + '-product-image-' + product.name)}" alt="Product Image">
                                 <div><strong>${product.name}</strong><br>Precio: ${product.price}</div>
                             </div>
                         `).join('')}
