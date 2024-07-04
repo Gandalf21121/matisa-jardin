@@ -286,41 +286,19 @@
         // Load existing data
 
         document.addEventListener('DOMContentLoaded', function() {
-
             var categories = JSON.parse(localStorage.getItem('categories')) || [];
 
             categories.forEach(function(category, index) {
-
                 var categoryNumber = index + 1;
+                var categoryElement = document.getElementById('category' + categoryNumber);
 
-                document.getElementById('category' + categoryNumber + '-name').value = category.name;
-
-                if (category.image) {
-
-                    document.getElementById('category' + categoryNumber + '-preview').style.backgroundImage = 'url(' + category.image + ')';
-
+                if (categoryElement) {
+                    categoryElement.textContent = category.name;
+                    if (category.image) {
+                        categoryElement.style.backgroundImage = 'url(' + category.image + ')';
+                    }
                 }
-
-                var productList = document.getElementById('category' + categoryNumber + '-products');
-
-                category.products.forEach(function(product) {
-
-                    var newProduct = document.createElement('div');
-
-                    newProduct.classList.add('product');
-
-                    newProduct.innerHTML = '<img src="' + product.image + '" alt="Product Image">' +
-
-                                           '<div><strong>' + product.name + '</strong><br>Precio: ' + product.price + '</div>' +
-
-                                           '<span class="delete-product" onclick="deleteProduct(this)">Eliminar</span>';
-
-                    productList.appendChild(newProduct);
-
-                });
-
             });
-
         });
 
     </script>
