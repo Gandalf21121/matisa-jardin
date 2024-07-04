@@ -30,7 +30,7 @@
             position: relative; /* Ensure relative positioning for children */
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
         }
-        .my-background {
+        .maincontainer {
             width: 60%;
             margin: 0 auto;
             background-color: #fff; /* White background color */
@@ -96,14 +96,18 @@
     </style>
 </head>
 <body>
+    <div class="main-container">
+        <h1>Matisa Jardín</h1>
 
-    <h1>Matisa Jardín</h1>
+        <div class="my-background">
+        </div>
 
-    <div class="categories-container">
-        <div class="category" id="category1" onclick="redirectToProducts('category1')"></div>
-        <div class="category" id="category2" onclick="redirectToProducts('category2')"></div>
-        <div class="category" id="category3" onclick="redirectToProducts('category3')"></div>
-        <div class="category" id="category4" onclick="redirectToProducts('category4')"></div>
+        <div class="categories-container">
+            <div class="category" id="category1" onclick="redirectToProducts('category1')"></div>
+            <div class="category" id="category2" onclick="redirectToProducts('category2')"></div>
+            <div class="category" id="category3" onclick="redirectToProducts('category3')"></div>
+            <div class="category" id="category4" onclick="redirectToProducts('category4')"></div>
+        </div>
     </div>
         <div class="contact-info">
         <p>Comprar al siguiente contacto:</p>
