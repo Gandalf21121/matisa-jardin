@@ -210,12 +210,13 @@
         // Load existing data
         document.addEventListener('DOMContentLoaded', function() {
             var categories = JSON.parse(localStorage.getItem('categories')) || [];
-    
+        
             categories.forEach(function(category, index) {
                 var categoryNumber = index + 1;
                 var categoryElement = document.getElementById('category' + categoryNumber + '-name');
                 var categoryPreview = document.getElementById('category' + categoryNumber + '-preview');
-    
+                var categoryProductsContainer = document.getElementById('category' + categoryNumber + '-products');
+        
                 if (categoryElement) {
                     categoryElement.value = category.name;
                     if (category.image) {
@@ -224,8 +225,21 @@
                         localStorage.setItem('category' + categoryNumber + '-preview-image', category.image);
                     }
                 }
+        
+                // Load products for the category
+                if (category.products) {
+                    category.products.forEach(function(product) {
+                        var productElement = document.createElement('div');
+                        productElement.classList.add('product');
+                        productElement.innerHTML = '<img src="' + product.image + '" alt="Product Image">' +
+                                                   '<div><strong>' + product.name + '</strong><br>Precio: ' + product.price + '</div>' +
+                                                   '<span class="delete-product" onclick="deleteProduct(this)">Eliminar</span>';
+                        categoryProductsContainer.appendChild(productElement);
+                    });
+                }
             });
         });
+
     
         // Event listeners for file input changes
         document.getElementById('category1-image').addEventListener('change', function() {
