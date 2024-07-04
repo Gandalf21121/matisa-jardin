@@ -1,92 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categories</title>
+    <title>Editar Categorías y Productos - Matisa Jardín</title>
     <style>
         body {
-            background-color: white;
             font-family: Arial, sans-serif;
-        }
-
-        .main-wrapper {
-            margin: 5%;
-        }
-
-        .container {
-            background-color: #4FBDBA; /* Teal green color */
+            background-color: #f2f2f2;
             padding: 20px;
-            border-radius: 10px;
-            text-align: center;
         }
-
-        #main-title {
-            color: white;
-            font-size: 2em;
+        .container {
+            width: 40%;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
             margin-bottom: 20px;
         }
-
-        .category-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+        label {
+            font-weight: bold;
         }
-
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
         .category-preview {
             width: 100%;
-            height: 150px;
-            background-color: #f0f0f0;
+            height: 200px;
             background-size: cover;
             background-position: center;
-            border: 2px solid #ccc;
             border-radius: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
-
         .product-list {
-            margin-top: 10px;
+            margin-top: 20px;
         }
-
-        input[type="file"], input[type="text"] {
-            display: block;
-            margin: 10px auto;
-            padding: 10px;
-            border-radius: 5px;
+        .product {
             border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .product img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+        .delete-product {
+            color: red;
+            cursor: pointer;
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="main-wrapper">
-        <div class="container">
-            <h1 id="main-title">Matisa-Jardin</h1>
-            <div class="category-container">
-                <div id="category1-preview" class="category-preview"></div>
-                <input type="file" id="category1-image" accept="image/*">
-                <input type="text" id="category1-name" placeholder="Nombre de la categoría">
-                <div id="category1-products" class="product-list"></div>
-                
-                <div id="category2-preview" class="category-preview"></div>
-                <input type="file" id="category2-image" accept="image/*">
-                <input type="text" id="category2-name" placeholder="Nombre de la categoría">
-                <div id="category2-products" class="product-list"></div>
-                
-                <div id="category3-preview" class="category-preview"></div>
-                <input type="file" id="category3-image" accept="image/*">
-                <input type="text" id="category3-name" placeholder="Nombre de la categoría">
-                <div id="category3-products" class="product-list"></div>
-                
-                <div id="category4-preview" class="category-preview"></div>
-                <input type="file" id="category4-image" accept="image/*">
-                <input type="text" id="category4-name" placeholder="Nombre de la categoría">
-                <div id="category4-products" class="product-list"></div>
-            </div>
+        
+    <div class="container">
+        <h1>Editar Categorías y Productos</h1>
+    
+        <!-- Category 1 -->
+        <div class="form-group">
+            <label for="category1-name">Nombre de la Categoría 1:</label>
+            <input type="text" id="category1-name" placeholder="Ingrese el nombre de la categoría">
         </div>
+        <div class="form-group">
+            <label>Imagen de Fondo de la Categoría 1:</label>
+            <div class="category-preview" id="category1-preview"></div>
+            <input type="file" id="category1-image" accept="image/*">
+        </div>
+        <div class="product-list" id="category1-products">
+            <!-- Products for Category 1 will be added here dynamically -->
+        </div>
+        <button onclick="addProduct('category1')">Agregar Producto a Categoría 1</button>
+    
+        <!-- Category 2 -->
+        <div class="form-group">
+            <label for="category2-name">Nombre de la Categoría 2:</label>
+            <input type="text" id="category2-name" placeholder="Ingrese el nombre de la categoría">
+        </div>
+        <div class="form-group">
+            <label>Imagen de Fondo de la Categoría 2:</label>
+            <div class="category-preview" id="category2-preview"></div>
+            <input type="file" id="category2-image" accept="image/*">
+        </div>
+        <div class="product-list" id="category2-products">
+            <!-- Products for Category 2 will be added here dynamically -->
+        </div>
+        <button onclick="addProduct('category2')">Agregar Producto a Categoría 2</button>
+    
+        <!-- Category 3 -->
+        <div class="form-group">
+            <label for="category3-name">Nombre de la Categoría 3:</label>
+            <input type="text" id="category3-name" placeholder="Ingrese el nombre de la categoría">
+        </div>
+        <div class="form-group">
+            <label>Imagen de Fondo de la Categoría 3:</label>
+            <div class="category-preview" id="category3-preview"></div>
+            <input type="file" id="category3-image" accept="image/*">
+        </div>
+        <div class="product-list" id="category3-products">
+            <!-- Products for Category 3 will be added here dynamically -->
+        </div>
+        <button onclick="addProduct('category3')">Agregar Producto a Categoría 3</button>
+    
+        <!-- Category 4 -->
+        <div class="form-group">
+            <label for="category4-name">Nombre de la Categoría 4:</label>
+            <input type="text" id="category4-name" placeholder="Ingrese el nombre de la categoría">
+        </div>
+        <div class="form-group">
+            <label>Imagen de Fondo de la Categoría 4:</label>
+            <div class="category-preview" id="category4-preview"></div>
+            <input type="file" id="category4-image" accept="image/*">
+        </div>
+        <div class="product-list" id="category4-products">
+            <!-- Products for Category 4 will be added here dynamically -->
+        </div>
+        <button onclick="addProduct('category4')">Agregar Producto a Categoría 4</button>
+    
+        <button onclick="guardarCambios()">Guardar Cambios</button>
     </div>
-
     <script>
+
         // Function to handle file input change for category images
+
         function handleFileInput(input, previewId) {
             var file = input.files[0];
             if (file) {
@@ -96,19 +148,24 @@
                     // Save image data to local storage
                     localStorage.setItem(previewId + '-image', e.target.result);
                 };
+
                 reader.readAsDataURL(file);
+
             }
+
         }
 
+
+
         // Function to add a product to a specific category
+
         function addProduct(categoryId) {
             var productName = prompt("Ingrese el nombre del producto:");
             var productPrice = prompt("Ingrese el precio del producto:");
-
+        
             var productImageInput = document.createElement('input');
             productImageInput.type = 'file';
             productImageInput.accept = 'image/*';
-
             productImageInput.onchange = function(event) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
@@ -119,81 +176,145 @@
                                            '<div><strong>' + productName + '</strong><br>Precio: ' + productPrice + '</div>' +
                                            '<span class="delete-product" onclick="deleteProduct(this)">Eliminar</span>';
                     productList.appendChild(newProduct);
-
+        
                     // Save product image to localStorage
                     localStorage.setItem(categoryId + '-product-image-' + productName, e.target.result);
                 };
                 reader.readAsDataURL(event.target.files[0]);
             };
-
+            productImageInput.click();
+        }
+        function addProduct(categoryId) {
+            var productName = prompt("Ingrese el nombre del producto:");
+            var productPrice = prompt("Ingrese el precio del producto:");
+        
+            // Create a file input element for the product image
+            var productImageInput = document.createElement('input');
+            productImageInput.type = 'file';
+            productImageInput.accept = 'image/*';
+        
+            productImageInput.onchange = function(event) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var productList = document.getElementById(categoryId + '-products');
+                    var newProduct = document.createElement('div');
+                    newProduct.classList.add('product');
+                    newProduct.innerHTML = '<img src="' + e.target.result + '" alt="Product Image">' +
+                                           '<div><strong>' + productName + '</strong><br>Precio: ' + productPrice + '</div>' +
+                                           '<span class="delete-product" onclick="deleteProduct(this)">Eliminar</span>';
+                    productList.appendChild(newProduct);
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            };
+        
             productImageInput.click();
         }
 
+
         // Function to delete a product
+
         function deleteProduct(element) {
+
             element.parentNode.remove();
+
         }
 
+
+
         // Save changes function
+
         function guardarCambios() {
             var categories = [];
-
+        
             for (var i = 1; i <= 4; i++) {
                 var categoryName = document.getElementById('category' + i + '-name').value;
-                var categoryImage = localStorage.getItem('category' + i + '-preview-image');
+                var categoryImage = localStorage.getItem('category' + i + '-image');
                 var products = [];
-
+        
                 document.querySelectorAll('#category' + i + '-products .product').forEach(function(productElement) {
                     var productName = productElement.querySelector('strong').innerText;
                     var productPrice = productElement.querySelector('div').innerText.replace('Precio: ', '');
                     var productImage = productElement.querySelector('img').src;
                     products.push({ name: productName, price: productPrice, image: productImage });
                 });
-
+        
                 categories.push({ name: categoryName, image: categoryImage, products: products });
             }
-
+        
             localStorage.setItem('categories', JSON.stringify(categories));
             alert('Cambios guardados');
         }
 
-        // Load existing data
-        document.addEventListener('DOMContentLoaded', function() {
-            var categories = JSON.parse(localStorage.getItem('categories')) || [];
-
-            categories.forEach(function(category, index) {
-                var categoryNumber = index + 1;
-                var categoryElement = document.getElementById('category' + categoryNumber + '-name');
-                var categoryPreview = document.getElementById('category' + categoryNumber + '-preview');
-
-                if (categoryElement) {
-                    categoryElement.value = category.name;
-                    if (category.image) {
-                        categoryPreview.style.backgroundImage = 'url(' + category.image + ')';
-                        // Save image data to local storage
-                        localStorage.setItem('category' + categoryNumber + '-preview-image', category.image);
-                    }
-                }
-            });
-        });
-
         // Event listeners for file input changes
+
         document.getElementById('category1-image').addEventListener('change', function() {
+
             handleFileInput(this, 'category1-preview');
+
         });
 
         document.getElementById('category2-image').addEventListener('change', function() {
+
             handleFileInput(this, 'category2-preview');
+
         });
 
         document.getElementById('category3-image').addEventListener('change', function() {
+
             handleFileInput(this, 'category3-preview');
+
         });
 
         document.getElementById('category4-image').addEventListener('change', function() {
+
             handleFileInput(this, 'category4-preview');
+
         });
+
+
+
+        // Load existing data
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            var categories = JSON.parse(localStorage.getItem('categories')) || [];
+
+            categories.forEach(function(category, index) {
+
+                var categoryNumber = index + 1;
+
+                document.getElementById('category' + categoryNumber + '-name').value = category.name;
+
+                if (category.image) {
+
+                    document.getElementById('category' + categoryNumber + '-preview').style.backgroundImage = 'url(' + category.image + ')';
+
+                }
+
+                var productList = document.getElementById('category' + categoryNumber + '-products');
+
+                category.products.forEach(function(product) {
+
+                    var newProduct = document.createElement('div');
+
+                    newProduct.classList.add('product');
+
+                    newProduct.innerHTML = '<img src="' + product.image + '" alt="Product Image">' +
+
+                                           '<div><strong>' + product.name + '</strong><br>Precio: ' + product.price + '</div>' +
+
+                                           '<span class="delete-product" onclick="deleteProduct(this)">Eliminar</span>';
+
+                    productList.appendChild(newProduct);
+
+                });
+
+            });
+
+        });
+
     </script>
+
 </body>
 </html>
 
