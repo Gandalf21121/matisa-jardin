@@ -136,9 +136,7 @@
         <button onclick="guardarCambios()">Guardar Cambios</button>
     </div>
     <script>
-
         // Function to handle file input change for category images
-
         function handleFileInput(input, previewId) {
             var file = input.files[0];
             if (file) {
@@ -148,12 +146,24 @@
                     // Save image data to local storage
                     localStorage.setItem(previewId + '-image', e.target.result);
                 };
-
                 reader.readAsDataURL(file);
-
             }
-
         }
+        // Event listeners for file input changes
+        document.getElementById('category1-image').addEventListener('change', function() {
+            handleFileInput(this, 'category1-preview');
+        });
+        document.getElementById('category2-image').addEventListener('change', function() {
+            handleFileInput(this, 'category2-preview');
+        });
+        document.getElementById('category3-image').addEventListener('change', function() {
+            handleFileInput(this, 'category3-preview');
+        });
+        document.getElementById('category4-image').addEventListener('change', function() {
+            handleFileInput(this, 'category4-preview');
+        });
+
+
 
 
 
