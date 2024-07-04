@@ -136,9 +136,7 @@
         <button onclick="guardarCambios()">Guardar Cambios</button>
     </div>
     <script>
-
         // Function to handle file input change for category images
-
         function handleFileInput(input, previewId) {
             var file = input.files[0];
             if (file) {
@@ -148,24 +146,19 @@
                     // Save image data to local storage
                     localStorage.setItem(previewId + '-image', e.target.result);
                 };
-
                 reader.readAsDataURL(file);
-
             }
-
         }
-
-
-
+    
         // Function to add a product to a specific category
-
         function addProduct(categoryId) {
             var productName = prompt("Ingrese el nombre del producto:");
             var productPrice = prompt("Ingrese el precio del producto:");
-        
+    
             var productImageInput = document.createElement('input');
             productImageInput.type = 'file';
             productImageInput.accept = 'image/*';
+    
             productImageInput.onchange = function(event) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
@@ -176,143 +169,81 @@
                                            '<div><strong>' + productName + '</strong><br>Precio: ' + productPrice + '</div>' +
                                            '<span class="delete-product" onclick="deleteProduct(this)">Eliminar</span>';
                     productList.appendChild(newProduct);
-        
+    
                     // Save product image to localStorage
                     localStorage.setItem(categoryId + '-product-image-' + productName, e.target.result);
                 };
                 reader.readAsDataURL(event.target.files[0]);
             };
+    
             productImageInput.click();
         }
-        function addProduct(categoryId) {
-            var productName = prompt("Ingrese el nombre del producto:");
-            var productPrice = prompt("Ingrese el precio del producto:");
-        
-            // Create a file input element for the product image
-            var productImageInput = document.createElement('input');
-            productImageInput.type = 'file';
-            productImageInput.accept = 'image/*';
-        
-            productImageInput.onchange = function(event) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var productList = document.getElementById(categoryId + '-products');
-                    var newProduct = document.createElement('div');
-                    newProduct.classList.add('product');
-                    newProduct.innerHTML = '<img src="' + e.target.result + '" alt="Product Image">' +
-                                           '<div><strong>' + productName + '</strong><br>Precio: ' + productPrice + '</div>' +
-                                           '<span class="delete-product" onclick="deleteProduct(this)">Eliminar</span>';
-                    productList.appendChild(newProduct);
-                };
-                reader.readAsDataURL(event.target.files[0]);
-            };
-        
-            productImageInput.click();
-        }
-
-
+    
         // Function to delete a product
-
         function deleteProduct(element) {
-
             element.parentNode.remove();
-
         }
-
-
-
+    
         // Save changes function
-
         function guardarCambios() {
             var categories = [];
-        
+    
             for (var i = 1; i <= 4; i++) {
                 var categoryName = document.getElementById('category' + i + '-name').value;
-                var categoryImage = localStorage.getItem('category' + i + '-image');
+                var categoryImage = localStorage.getItem('category' + i + '-preview-image');
                 var products = [];
-        
+    
                 document.querySelectorAll('#category' + i + '-products .product').forEach(function(productElement) {
                     var productName = productElement.querySelector('strong').innerText;
                     var productPrice = productElement.querySelector('div').innerText.replace('Precio: ', '');
                     var productImage = productElement.querySelector('img').src;
                     products.push({ name: productName, price: productPrice, image: productImage });
                 });
-        
+    
                 categories.push({ name: categoryName, image: categoryImage, products: products });
             }
-        
+    
             localStorage.setItem('categories', JSON.stringify(categories));
             alert('Cambios guardados');
         }
-
-        // Event listeners for file input changes
-
-        document.getElementById('category1-image').addEventListener('change', function() {
-
-            handleFileInput(this, 'category1-preview');
-
-        });
-
-        document.getElementById('category2-image').addEventListener('change', function() {
-
-            handleFileInput(this, 'category2-preview');
-
-        });
-
-        document.getElementById('category3-image').addEventListener('change', function() {
-
-            handleFileInput(this, 'category3-preview');
-
-        });
-
-        document.getElementById('category4-image').addEventListener('change', function() {
-
-            handleFileInput(this, 'category4-preview');
-
-        });
-
-
-
+    
         // Load existing data
-
         document.addEventListener('DOMContentLoaded', function() {
-
             var categories = JSON.parse(localStorage.getItem('categories')) || [];
-
+    
             categories.forEach(function(category, index) {
-
                 var categoryNumber = index + 1;
-
-                document.getElementById('category' + categoryNumber + '-name').value = category.name;
-
-                if (category.image) {
-
-                    document.getElementById('category' + categoryNumber + '-preview').style.backgroundImage = 'url(' + category.image + ')';
-
+                var categoryElement = document.getElementById('category' + categoryNumber + '-name');
+                var categoryPreview = document.getElementById('category' + categoryNumber + '-preview');
+    
+                if (categoryElement) {
+                    categoryElement.value = category.name;
+                    if (category.image) {
+                        categoryPreview.style.backgroundImage = 'url(' + category.image + ')';
+                        // Save image data to local storage
+                        localStorage.setItem('category' + categoryNumber + '-preview-image', category.image);
+                    }
                 }
-
-                var productList = document.getElementById('category' + categoryNumber + '-products');
-
-                category.products.forEach(function(product) {
-
-                    var newProduct = document.createElement('div');
-
-                    newProduct.classList.add('product');
-
-                    newProduct.innerHTML = '<img src="' + product.image + '" alt="Product Image">' +
-
-                                           '<div><strong>' + product.name + '</strong><br>Precio: ' + product.price + '</div>' +
-
-                                           '<span class="delete-product" onclick="deleteProduct(this)">Eliminar</span>';
-
-                    productList.appendChild(newProduct);
-
-                });
-
             });
-
         });
-
+    
+        // Event listeners for file input changes
+        document.getElementById('category1-image').addEventListener('change', function() {
+            handleFileInput(this, 'category1-preview');
+        });
+    
+        document.getElementById('category2-image').addEventListener('change', function() {
+            handleFileInput(this, 'category2-preview');
+        });
+    
+        document.getElementById('category3-image').addEventListener('change', function() {
+            handleFileInput(this, 'category3-preview');
+        });
+    
+        document.getElementById('category4-image').addEventListener('change', function() {
+            handleFileInput(this, 'category4-preview');
+        });
+    
     </script>
 
 </body>
